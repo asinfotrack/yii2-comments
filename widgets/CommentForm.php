@@ -68,7 +68,7 @@ class CommentForm extends \yii\base\Widget
 		echo $form->errorSummary($this->commentModel);
 		echo $form->field($this->commentModel, 'title')->textInput(['maxlength'=>true]);
 		echo $form->field($this->commentModel, 'content')->textarea();
-		echo Html::submitButton(empty($this->buttonLabel) ? Yii::t('app', 'save') : $this->buttonLabel, $this->buttonOptions);
+		echo Html::submitButton(empty($this->buttonLabel) ? Yii::t('app', 'Save') : $this->buttonLabel, $this->buttonOptions);
 		ActiveForm::end();
 	}
 
