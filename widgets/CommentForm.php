@@ -31,6 +31,11 @@ class CommentForm extends \yii\base\Widget
 	public $commentModel;
 
 	/**
+	 * @var array options for the text-area
+	 */
+	public $textAreaOptions = ['rows'=>5];
+
+	/**
 	 * @var string the label for the submit button (defaults to 'save')
 	 */
 	public $buttonLabel;
@@ -67,7 +72,7 @@ class CommentForm extends \yii\base\Widget
 		$form = ActiveForm::begin();
 		echo $form->errorSummary($this->commentModel);
 		echo $form->field($this->commentModel, 'title')->textInput(['maxlength'=>true]);
-		echo $form->field($this->commentModel, 'content')->textarea();
+		echo $form->field($this->commentModel, 'content')->textarea($this->textAreaOptions);
 		echo Html::submitButton(empty($this->buttonLabel) ? Yii::t('app', 'Save') : $this->buttonLabel, $this->buttonOptions);
 		ActiveForm::end();
 	}
