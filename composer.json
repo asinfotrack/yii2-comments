@@ -1,0 +1,36 @@
+{
+	"name": "asinfotrack/yii2-comments",
+	"type": "yii2-extension",
+	
+	"description": "Yii2-comments is a behavior and a set of widgets to enable generic commenting on Yii2-ActiveRecord-Models",
+	"keywords": ["yii2", "comments", "comment", "model", "behavior", "widget", "bundle"],
+	
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Pascal Mueller",
+			"email": "pascal.mueller@asinfotrack.ch",
+			"homepage": "http://www.asinfotrack.ch"
+		}
+	],
+	
+	"minimum-stability": "stable",
+	"support": {
+		"source": "https://github.com/asinfotrack/yii2-comments",
+		"issues": "https://github.com/asinfotrack/yii2-comments/issues"
+	},
+	
+	"require": {
+		"php": ">=5.4.0",
+		"yiisoft/yii2": "2.0.*",
+
+		"asinfotrack/yii2-toolbox": "dev-master",
+		"cebe/yii2-gravatar": "*"
+	},
+	
+	"autoload": {
+		"psr-4": {
+			"asinfotrack\\yii2\\comments\\": ""
+		}
+	}
+}
