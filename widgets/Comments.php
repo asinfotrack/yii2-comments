@@ -5,7 +5,8 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use asinfotrack\yii2\comments\helpers\CommentsHelper;
+use asinfotrack\yii2\comments\behaviors\CommentsBehavior;
+use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 
 /**
  * This widget renders the comments of a model implementing CommentsBehavior
@@ -87,11 +88,11 @@ class Comments extends \yii\base\Widget
 	public function init()
 	{
 		//assert proper model is set
-		if ($this->subject === null || !CommentsHelper::isActiveRecord($this->subject, false)) {
+		if ($this->subject === null || !ComponentConfig::isActiveRecord($this->subject, false)) {
 			$msg = Yii::t('app', 'Setting the model property of type ActiveRecord is mandatory');
 			throw new InvalidConfigException($msg);
 		}
-		CommentsHelper::hasCommentsBehavior($this->subject, true);
+		ComponentConfig::hasBehavior($this->subject, CommentsBehavior::className(), true);
 
 		//fetch comments
 		$this->comments = $this->subject->getComments($this->newestFirst);

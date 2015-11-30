@@ -1,7 +1,7 @@
 <?php
 namespace asinfotrack\yii2\comments\models;
 
-use asinfotrack\yii2\comments\helpers\CommentsHelper;
+use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
 
 /**
@@ -24,7 +24,7 @@ class CommentQuery extends \yii\db\ActiveQuery
 	 */
 	public function subject($model)
 	{
-		CommentsHelper::isActiveRecord($model, true);
+		ComponentConfig::isActiveRecord($model, true);
 		static::validateModel($model);
 
 		$this->modelClass($model::className());

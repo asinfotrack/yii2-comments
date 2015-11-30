@@ -1,10 +1,11 @@
 <?php
 namespace asinfotrack\yii2\comments\models;
 
-use asinfotrack\yii2\comments\helpers\CommentsHelper;
-use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
 use Yii;
 use yii\base\InvalidCallException;
+use asinfotrack\yii2\comments\behaviors\CommentsBehavior;
+use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
+use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
 
 /**
  * The actual model of a single comment
@@ -127,8 +128,8 @@ class Comment extends \yii\db\ActiveRecord
 	public function setSubjectModel($subjectModel)
 	{
 		//validate subject model
-		CommentsHelper::isActiveRecord($subjectModel, true);
-		CommentsHelper::hasCommentsBehavior($subjectModel, true);
+		ComponentConfig::isActiveRecord($subjectModel, true);
+		ComponentConfig::hasBehavior($subjectModel, CommentsBehavior::className(), true);
 
 		//only on unsaved comments
 		if (!$this->isNewRecord) {

@@ -3,8 +3,9 @@ namespace asinfotrack\yii2\comments\widgets;
 
 use yii\bootstrap\ActiveForm;
 use yii\base\InvalidConfigException;
-use asinfotrack\yii2\comments\helpers\CommentsHelper;
 use asinfotrack\yii2\comments\models\Comment;
+use asinfotrack\yii2\comments\behaviors\CommentsBehavior;
+use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 use yii\helpers\Html;
 
 class CommentForm extends \yii\base\Widget
@@ -27,11 +28,11 @@ class CommentForm extends \yii\base\Widget
 	public function init()
 	{
 		//assert proper model is set
-		if ($this->subject === null || !CommentsHelper::isActiveRecord($this->subject, false)) {
+		if ($this->subject === null || !ComponentConfig::isActiveRecord($this->subject, false)) {
 			$msg = Yii::t('app', 'Setting the model property of type ActiveRecord is mandatory');
 			throw new InvalidConfigException($msg);
 		}
-		CommentsHelper::hasCommentsBehavior($this->subject, true);
+		ComponentConfig::hasBehavior($this->subject, CommentsBehavior::className(), true);
 
 		//assert proper comment model
 		if ($this->commentModel === null || !($this->commentModel instanceof Comment)) {

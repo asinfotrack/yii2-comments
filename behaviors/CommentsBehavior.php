@@ -1,9 +1,8 @@
 <?php
 namespace asinfotrack\yii2\comments\behaviors;
 
-use asinfotrack\yii2\comments\helpers\CommentsHelper;
 use asinfotrack\yii2\comments\models\Comment;
-
+use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 /**
  * The behavior which will be attached to the actual model class in order to
  * enable commenting functionality on it
@@ -32,7 +31,7 @@ class CommentsBehavior extends \yii\base\Behavior
 	public function attach($owner)
 	{
 		//validate proper owner config
-		CommentsHelper::isActiveRecord($owner, true);
+		ComponentConfig::isActiveRecord($owner, true);
 
 		parent::attach($owner);
 	}
