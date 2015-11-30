@@ -109,11 +109,15 @@ class Comments extends \yii\base\Widget
 	{
 		echo Html::beginTag('div', $this->options);
 
-			foreach ($this->comments as $comment) {
-				if ($this->commentView === null) {
-					$this->outputComment($comment);
-				} else {
-					echo $this->render($this->commentView, ['model'=>$comment, 'options'=>$this->commentOptions]);
+			if (count($this->comments) === 0) {
+				echo Html::tag('span', Yii::t('app', 'No comments yet!'), ['class'=>'no-comments']);
+			} else {
+				foreach ($this->comments as $comment) {
+					if ($this->commentView === null) {
+						$this->outputComment($comment);
+					} else {
+						echo $this->render($this->commentView, ['model' => $comment, 'options' => $this->commentOptions]);
+					}
 				}
 			}
 
