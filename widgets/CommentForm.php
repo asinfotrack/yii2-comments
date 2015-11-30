@@ -1,12 +1,13 @@
 <?php
 namespace asinfotrack\yii2\comments\widgets;
 
+use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\base\InvalidConfigException;
+use yii\helpers\Html;
+use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 use asinfotrack\yii2\comments\models\Comment;
 use asinfotrack\yii2\comments\behaviors\CommentsBehavior;
-use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
-use yii\helpers\Html;
 
 class CommentForm extends \yii\base\Widget
 {
