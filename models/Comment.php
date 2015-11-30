@@ -24,6 +24,8 @@ use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
  * @property string $title
  * @property string $content
  * @property bool $is_published
+ *
+ * @property \yii\db\ActiveRecord|\asinfotrack\yii2\comments\behaviors\CommentsBehavior $subject
  */
 class Comment extends \yii\db\ActiveRecord
 {
@@ -32,7 +34,7 @@ class Comment extends \yii\db\ActiveRecord
 	 * @var \yii\db\ActiveRecord|\asinfotrack\yii2\comments\behaviors\CommentsBehavior the model
 	 * to which the comment belongs. This must be set manually, when the comment is created!
 	 */
-	protected $subjectModel;
+	protected $subject;
 
 	/**
 	 * @inheritdoc
@@ -62,7 +64,7 @@ class Comment extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['subjectModel'], 'required', 'when'=>function ($model, $attribute) { return $model->isNewRecord; }],
+			[['subject'], 'required', 'when'=>function ($model, $attribute) { return $model->isNewRecord; }],
 
 			[['created_by'], 'default', 'value'=>function ($model, $attribute) {
 				return Yii::$app->user->isGuest ? null : Yii::$app->user->id;
@@ -97,6 +99,8 @@ class Comment extends \yii\db\ActiveRecord
 			'title'=>Yii::t('app', 'Title'),
 			'content'=>Yii::t('app', 'Content'),
 			'is_published'=>Yii::t('app', 'Is published'),
+
+			'subject'=>Yii::t('app', 'Subject'),
 		];
 	}
 
@@ -117,19 +121,19 @@ class Comment extends \yii\db\ActiveRecord
 	 */
 	public function getSubjectModel()
 	{
-		return $this->subjectModel;
+		return $this->subject;
 	}
 
 	/**
 	 * Sets the subject model
 	 *
-	 * @param \yii\db\ActiveRecord $subjectModel
+	 * @param \yii\db\ActiveRecord $subject
 	 */
-	public function setSubjectModel($subjectModel)
+	public function setSubject($subject)
 	{
 		//validate subject model
-		ComponentConfig::isActiveRecord($subjectModel, true);
-		ComponentConfig::hasBehavior($subjectModel, CommentsBehavior::className(), true);
+		ComponentConfig::isActiveRecord($subject, true);
+		ComponentConfig::hasBehavior($subject, CommentsBehavior::className(), true);
 
 		//only on unsaved comments
 		if (!$this->isNewRecord) {
@@ -138,10 +142,10 @@ class Comment extends \yii\db\ActiveRecord
 		}
 
 		//set values from subject model
-		$this->model_class = $subjectModel->className();
-		$this->foreign_pk = PrimaryKey::asJson($subjectModel);
+		$this->model_class = $subject->className();
+		$this->foreign_pk = PrimaryKey::asJson($subject);
 
-		$this->subjectModel = $subjectModel;
+		$this->subject = $subject;
 	}
 
 }
