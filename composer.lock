@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/asinfotrack/yii2-toolbox.git",
-                "reference": "adcd52273b1e9e74bb5d0e449520f15cb7f885ab"
+                "reference": "e276c1aaa1e020aa8ca7c308dd2004304a1b1672"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asinfotrack/yii2-toolbox/zipball/adcd52273b1e9e74bb5d0e449520f15cb7f885ab",
-                "reference": "adcd52273b1e9e74bb5d0e449520f15cb7f885ab",
+                "url": "https://api.github.com/repos/asinfotrack/yii2-toolbox/zipball/e276c1aaa1e020aa8ca7c308dd2004304a1b1672",
+                "reference": "e276c1aaa1e020aa8ca7c308dd2004304a1b1672",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 "widgets",
                 "yii2"
             ],
-            "time": "2015-11-30 12:02:16"
+            "time": "2015-11-30 12:32:12"
         },
         {
             "name": "bower-asset/bootstrap",

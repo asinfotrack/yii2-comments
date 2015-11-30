@@ -9,6 +9,13 @@ use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 use asinfotrack\yii2\comments\models\Comment;
 use asinfotrack\yii2\comments\behaviors\CommentsBehavior;
 
+/**
+ * Renders the form to submit comments to a model
+ *
+ * @author Pascal Mueller, AS infotrack AG
+ * @link http://www.asinfotrack.ch
+ * @license MIT
+ */
 class CommentForm extends \yii\base\Widget
 {
 
@@ -22,6 +29,16 @@ class CommentForm extends \yii\base\Widget
 	 * @var \asinfotrack\yii2\comments\models\Comment the comment model
 	 */
 	public $commentModel;
+
+	/**
+	 * @var string the label for the submit button (defaults to 'save')
+	 */
+	public $buttonLabel;
+
+	/**
+	 * @var array options for the submit button
+	 */
+	public $buttonOptions = ['class'=>'btn btn-primary'];
 
 	/**
 	 * @inheritdoc
@@ -42,15 +59,17 @@ class CommentForm extends \yii\base\Widget
 		}
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function run()
 	{
 		$form = ActiveForm::begin();
 		echo $form->errorSummary($this->commentModel);
 		echo $form->field($this->commentModel, 'title')->textInput(['maxlength'=>true]);
 		echo $form->field($this->commentModel, 'content')->textarea();
-		echo Html::submitButton('save');
+		echo Html::submitButton(empty($this->buttonLabel) ? Yii::t('app', 'save') : $this->buttonLabel, $this->buttonOptions);
 		ActiveForm::end();
 	}
-
 
 }

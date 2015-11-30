@@ -153,7 +153,7 @@ class Comments extends \yii\base\Widget
 
 				//content
 				$content = $this->encodeCommentContents ? Html::encode($comment->content) : $comment->content;
-				echo Html::tag('div', $content, ['comment-content']);
+				echo Html::tag('div', $content, ['class'=>'comment-content']);
 
 				//meta
 				echo Html::beginTag('dl', ['class'=>'comment-meta']);

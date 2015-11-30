@@ -97,7 +97,7 @@ class Comment extends \yii\db\ActiveRecord
 			'updated'=>Yii::t('app', 'Updated'),
 			'updated by'=>Yii::t('app', 'Updated by'),
 			'title'=>Yii::t('app', 'Title'),
-			'content'=>Yii::t('app', 'Content'),
+			'content'=>Yii::t('app', 'Comment content'),
 			'is_published'=>Yii::t('app', 'Is published'),
 
 			'subject'=>Yii::t('app', 'Subject'),
@@ -119,7 +119,7 @@ class Comment extends \yii\db\ActiveRecord
 	 *
 	 * @return \asinfotrack\yii2\comments\behaviors\CommentsBehavior|\yii\db\ActiveRecord
 	 */
-	public function getSubjectModel()
+	public function getSubject()
 	{
 		return $this->subject;
 	}
