@@ -94,12 +94,20 @@ class Comments extends \yii\base\Widget
 		}
 		ComponentConfig::hasBehavior($this->subject, CommentsBehavior::className(), true);
 
-		//fetch comments
-		$this->comments = $this->subject->getComments($this->newestFirst);
+		//load the comments
+		$this->loadComments();
 
 		//prepare options
 		Html::addCssClass($this->options, 'widget-comments');
 		Html::addCssClass($this->commentOptions, 'comment');
+	}
+
+	/**
+	 * Loads the comments
+	 */
+	protected function loadComments()
+	{
+		$this->comments = $this->subject->getComments($this->newestFirst);
 	}
 
 	/**
