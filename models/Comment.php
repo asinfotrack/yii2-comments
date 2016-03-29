@@ -75,9 +75,10 @@ class Comment extends \yii\db\ActiveRecord
 			[['model_class','foreign_pk','content','is_published'], 'required'],
 
 			[['model_class','foreign_pk','title'], 'string', 'max'=>255],
-			[['content'], 'string', 'max'=>255],
 			[['created','updated'], 'integer'],
 			[['is_published'], 'boolean'],
+
+			[['content'], 'safe'],
 
 			[['created_by', 'updated_by'], 'exist', 'targetClass'=>Yii::$app->user->identity->className(), 'targetAttribute'=>'id'],
 		];
