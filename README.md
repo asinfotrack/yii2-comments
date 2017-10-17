@@ -27,11 +27,13 @@ to the `require` section of your `composer.json` file.
 
 
 ## Migration
-	
-After downloading everything you need to apply the migration creating the audit trail entry table:
 
-	yii migrate --migrationPath=@vendor/asinfotrack/yii2-comments/migrations
-	
+After downloading everything you need to apply the migration creating the comment entry table:
+
+```bash
+$ yii migrate --migrationPath=@vendor/asinfotrack/yii2-comments/migrations
+```
+
 To remove the table just do the same migration downwards.
 
 ## Usage
@@ -55,7 +57,7 @@ public function behaviors()
 ```
 
 ### Widget
-The widget is also very easy to use. Just provide the model to get the audit trail for:
+The widget is also very easy to use. Just provide the model to get the comment for:
 
 ```php
 <?= Comments::widget([
