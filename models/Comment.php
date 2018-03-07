@@ -20,7 +20,7 @@ use yii\helpers\Json;
  *
  * @property integer $id
  * @property string $model_class
- * @property string $foreign_pk
+ * @property mixed[] $foreign_pk
  * @property integer $created
  * @property integer $created_by
  * @property integer $updated
@@ -78,7 +78,7 @@ class Comment extends \yii\db\ActiveRecord
 
 			[['model_class','foreign_pk','content','is_published'], 'required'],
 
-			[['model_class','foreign_pk','title'], 'string', 'max'=>255],
+			[['model_class','title'], 'string', 'max'=>255],
 			[['created','updated'], 'integer'],
 			[['is_published'], 'boolean'],
 
