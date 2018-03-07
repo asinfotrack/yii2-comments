@@ -3,6 +3,7 @@ namespace asinfotrack\yii2\comments\models;
 
 use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
+use yii\helpers\Json;
 
 /**
  * Query class for the comment model
@@ -24,11 +25,10 @@ class CommentQuery extends \yii\db\ActiveQuery
 	 */
 	public function subject($model)
 	{
-		ComponentConfig::isActiveRecord($model, true);
-		static::validateModel($model);
+		Comment::validateSubject($model, true);
 
 		$this->modelClass($model::className());
-		$this->andWhere(['foreign_pk'=>static::createPrimaryKeyJson($model)]);
+		$this->andWhere(['foreign_pk'=>$this->createPrimaryKeyJson($model)]);
 
 		return $this;
 	}
@@ -42,7 +42,6 @@ class CommentQuery extends \yii\db\ActiveQuery
 	public function modelClass($modelClass)
 	{
 		$this->andWhere(['model_class'=>$modelClass]);
-
 		return $this;
 	}
 
@@ -59,6 +58,7 @@ class CommentQuery extends \yii\db\ActiveQuery
 		return $this;
 	}
 
+
 	/**
 	 * Creates the json-representation of the pk (array in the format attribute=>value)
 	 * @see \asinfotrack\yii2\toolbox\helpers\PrimaryKey::asJson()
@@ -68,25 +68,7 @@ class CommentQuery extends \yii\db\ActiveQuery
 	 */
 	protected static function createPrimaryKeyJson($model)
 	{
-		return PrimaryKey::asJson($model);
-	}
-
-	/**
-	 * Validates that the model is not a new record and has a valid primary key
-	 *
-	 * @param mixed $model the model to check
-	 * @throws \asinfotrack\yii2\comments\models\InvalidParamException
-	 */
-	protected static function validateModel($model)
-	{
-		if ($model->isNewRecord) {
-			$msg = Yii::t('app', 'Commenting is not possible on unsaved models');
-			throw new InvalidParamException($msg);
-		}
-		if (count($model->primaryKey) === 0) {
-			$msg = Yii::t('app', 'The model needs a valid primary key');
-			throw new InvalidParamException($msg);
-		}
+		return Json::encode($model->getPrimaryKey(true));
 	}
 
 }

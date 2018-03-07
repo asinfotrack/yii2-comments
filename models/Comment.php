@@ -2,10 +2,14 @@
 namespace asinfotrack\yii2\comments\models;
 
 use Yii;
+use yii\base\ErrorException;
 use yii\base\InvalidCallException;
 use asinfotrack\yii2\comments\behaviors\CommentsBehavior;
 use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
+
+use yii\base\InvalidParamException;
+use yii\helpers\Json;
 
 /**
  * The actual model of a single comment
@@ -116,37 +120,86 @@ class Comment extends \yii\db\ActiveRecord
 	}
 
 	/**
-	 * Returns the subject model
+	 * @inheritdoc
+	 */
+	public function afterFind()
+	{
+		$this->foreign_pk = Json::decode($this->foreign_pk);
+		parent::afterFind();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function beforeSave($insert)
+	{
+		if (!parent::beforeSave($insert)) {
+			return false;
+		}
+		$this->foreign_pk = Json::encode($this->foreign_pk);
+		return true;
+	}
+
+
+	/**
+	 * Getter for the subject model
 	 *
-	 * @return \asinfotrack\yii2\comments\behaviors\CommentsBehavior|\yii\db\ActiveRecord
+	 * @return \yii\db\ActiveRecord the subject of this comment
+	 * @throws \yii\base\ErrorException
 	 */
 	public function getSubject()
 	{
+		if (!$this->isNewRecord && $this->subject === null) {
+			$this->subject = call_user_func([$this->model_class, 'findOne'], $this->foreign_pk);
+			if ($this->subject === null) {
+				$msg = Yii::t('app', 'Could not find model for attachment `{attachment}`', [
+					'attachment'=>$this->id
+				]);
+				throw new ErrorException($msg);
+			}
+		}
 		return $this->subject;
 	}
 
 	/**
-	 * Sets the subject model
+	 * Sets the subject-model for this comment
 	 *
-	 * @param \yii\db\ActiveRecord $subject
+	 * @param \yii\db\ActiveRecord $subject the subject model
 	 */
 	public function setSubject($subject)
 	{
-		//validate subject model
-		ComponentConfig::isActiveRecord($subject, true);
-		ComponentConfig::hasBehavior($subject, CommentsBehavior::className(), true);
+		self::validateSubject($subject, true);
 
-		//only on unsaved comments
-		if (!$this->isNewRecord) {
-			$msg = Yii::t('app', 'The subject model can only be set manually on unsaved comments');
-			throw new InvalidCallException($msg);
-		}
-
-		//set values from subject model
 		$this->model_class = $subject->className();
-		$this->foreign_pk = PrimaryKey::asJson($subject);
-
+		$this->foreign_pk = $subject->getPrimaryKey(true);
 		$this->subject = $subject;
 	}
 
+	/**
+	 * Validates if the model is an active record, has the comments behavior, has a primary key and is not a new record.
+	 *
+	 * @param \yii\db\ActiveRecord $subject the subject model
+	 * @param bool $throwException
+	 * @return bool false means this subject is invalid
+	 * @throws \yii\base\InvalidConfigException|\yii\base\InvalidParamException
+	 */
+	public static function validateSubject($subject, $throwException = true)
+	{
+		if (!ComponentConfig::isActiveRecord($subject, $throwException)) return false;
+		if (!ComponentConfig::hasBehavior($subject, CommentsBehavior::className(), $throwException)) return false;
+
+		if (count($subject->primaryKey) === 0) {
+			if (!$throwException) return false;
+			$msg = Yii::t('app', 'The model needs a valid primary key');
+			throw new InvalidParamException($msg);
+		}
+
+		if ($subject->isNewRecord) {
+			if (!$throwException) return false;
+			$msg = Yii::t('app', 'Commenting is not possible on unsaved models');
+			throw new InvalidParamException($msg);
+		}
+
+		return true;
+	}
 }
