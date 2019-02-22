@@ -188,7 +188,7 @@ class Comment extends \yii\db\ActiveRecord
 		if (!ComponentConfig::isActiveRecord($subject, $throwException)) return false;
 		if (!ComponentConfig::hasBehavior($subject, CommentsBehavior::className(), $throwException)) return false;
 
-		if (count($subject->primaryKey) === 0) {
+		if (empty($subject->primaryKey) || (is_array($subject->primaryKey) && count($subject->primaryKey) === 0)) {
 			if (!$throwException) return false;
 			$msg = Yii::t('app', 'The model needs a valid primary key');
 			throw new InvalidParamException($msg);
