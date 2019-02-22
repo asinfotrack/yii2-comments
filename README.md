@@ -65,3 +65,6 @@ The widget is also very easy to use. Just provide the model to get the audit tra
 	//TODO: comment this
 ]) ?>
 ```
+
+## Changelog
+[Learn about the latest improvements.](changelog.md)
