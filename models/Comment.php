@@ -84,7 +84,7 @@ class Comment extends \yii\db\ActiveRecord
 
 			[['content'], 'safe'],
 
-			[['created_by', 'updated_by'], 'exist', 'targetClass'=>Yii::$app->user->identity->className(), 'targetAttribute'=>'id'],
+			[['created_by', 'updated_by'], 'exist', 'targetClass'=>Yii::$app->user->identityClass, 'targetAttribute'=>'id'],
 		];
 	}
 
