@@ -20,7 +20,7 @@ $ composer require asinfotrack/yii2-comments
 or add
 
 ```
-"asinfotrack/yii2-comments": "~0.8.0"
+"asinfotrack/yii2-comments": "~0.8.2"
 ```
 
 to the `require` section of your `composer.json` file.
