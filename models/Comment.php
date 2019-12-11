@@ -72,7 +72,7 @@ class Comment extends \yii\db\ActiveRecord
 
 			[['created_by'], 'default', 'value'=>function ($model, $attribute) {
 				return Yii::$app->user->isGuest ? null : Yii::$app->user->id;
-			}],
+			}, 'when'=>function($model, $attribute) { return $this->isNewRecord; }],
 
 			[['is_published'], 'default', 'value'=>1],
 
