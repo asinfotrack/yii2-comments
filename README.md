@@ -45,7 +45,7 @@ public function behaviors()
     return [
     	// ...
     	'comments'=>[
-    		'class'=>CommentBehavior::className(),
+    		'class'=>CommentBehavior::class,
     		
     		//TODO: comment this
     	],
