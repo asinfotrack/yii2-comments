@@ -150,7 +150,7 @@ class Comment extends \yii\db\ActiveRecord
 	public function getSubject()
 	{
 		if (!$this->isNewRecord && $this->subject === null) {
-			$this->subject = call_user_func([$this->model_class, 'findOne'], $this->foreign_pk);
+			$this->subject = call_user_func([$this->model_class, 'findOne'], Json::decode($this->foreign_pk));
 			if ($this->subject === null) {
 				$msg = Yii::t('app', 'Could not find model for attachment `{attachment}`', [
 					'attachment'=>$this->id
